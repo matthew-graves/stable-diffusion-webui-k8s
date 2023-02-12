@@ -16,7 +16,7 @@ spec:
       initContainers:
       - name: download-model
         image: alpine:3.12
-        command: ['sh', '-c', 'wget https://huggingface.co/CompVis/stable-diffusion-v-1-4-original/resolve/main/sd-v1-4.ckpt -P /models']
+        command: ['sh', '-c', 'if [ ! -e "/models/sd-v1-4.ckpt" ]; then wget https://huggingface.co/CompVis/stable-diffusion-v-1-4-original/resolve/main/sd-v1-4.ckpt -P /models; fi']
         volumeMounts:
         - name: model-data
           mountPath: /models

@@ -12,4 +12,4 @@ WORKDIR /app
 COPY webui-user.sh /app/
 
 RUN wget https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
-RUN /bin/bash webui.sh
+ENTRYPOINT ["/bin/bash", "webui.sh"]
