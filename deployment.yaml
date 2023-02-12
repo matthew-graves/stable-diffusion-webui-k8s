@@ -23,6 +23,7 @@ spec:
       containers:
       - name: stable-diffusion-webui
         image: ghcr.io/matthew-graves/stable-diffusion-webui-k8s:main
+        imagePullPolicy: Always
         volumeMounts:
         - name: model-data
           mountPath: /app/models/Stable-diffusion
