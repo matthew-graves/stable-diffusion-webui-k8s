@@ -5,7 +5,10 @@ RUN apt install -y wget git python3 python3-venv bash libgl1 libglib2.0-0
 
 RUN useradd stablediffusion
 RUN mkdir /app
+RUN mkdir /model
 RUN chown stablediffusion:stablediffusion /app
+RUN chown stablediffusion:stablediffusion /model
+
 
 USER stablediffusion
 WORKDIR /app
