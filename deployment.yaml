@@ -26,7 +26,7 @@ spec:
         imagePullPolicy: Always
         volumeMounts:
         - name: model-data
-          mountPath: /app/models/Stable-diffusion
+          mountPath: /models
       volumes:
       - name: model-data
         hostPath:

@@ -28,7 +28,7 @@ export COMMANDLINE_ARGS="--xformers --ckpt-dir /models --medvram"
 export TORCH_COMMAND="pip install torch==1.12.1+cu113 --extra-index-url https://download.pytorch.org/whl/cu113"
 
 # Requirements file to use for stable-diffusion-webui
-#export REQS_FILE="requirements_versions.txt"
+export REQS_FILE="requirements_versions.txt"
 
 # Fixed git repos
 #export K_DIFFUSION_PACKAGE=""
