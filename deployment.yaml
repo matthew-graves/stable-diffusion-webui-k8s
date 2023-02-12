@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stable-diffusion-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stable-diffusion-webui
+  template:
+    metadata:
+      labels:
+        app: stable-diffusion-webui
+    spec:
+      runtimeClassName: nvidia
+      initContainers:
+      - name: download-model
+        image: alpine:3.12
+        command: ['sh', '-c', 'wget https://huggingface.co/CompVis/stable-diffusion-v-1-4-original/resolve/main/sd-v1-4.ckpt -P /models']
+        volumeMounts:
+        - name: model-data
+          mountPath: /models
+      containers:
+      - name: stable-diffusion-webui
+        image: ghcr.io/matthew-graves/stable-diffusion-webui-k8s:main
+        volumeMounts:
+        - name: model-data
+          mountPath: /app/models/Stable-diffusion
+      volumes:
+      - name: model-data
+        hostPath:
+          path: /models

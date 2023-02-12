@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-runtime-ubuntu22.04
+FROM nvidia/cuda:11.3.0-runtime-ubuntu22.04
 
 RUN apt-get update
 RUN apt install -y wget git python3 python3-venv bash
