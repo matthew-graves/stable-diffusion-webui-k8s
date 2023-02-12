@@ -10,7 +10,7 @@ install_dir="/app"
 clone_dir="stable-diffusion"
 
 # Commandline arguments for webui.py, for example: export COMMANDLINE_ARGS="--medvram --opt-split-attention"
-export COMMANDLINE_ARGS="--xformers --ckpt-dir /models"
+export COMMANDLINE_ARGS="--xformers --ckpt-dir /models --medvram"
 
 # python3 executable
 #python_cmd="python3"
@@ -41,6 +41,6 @@ export TORCH_COMMAND="pip install torch==1.12.1+cu113 --extra-index-url https://
 #export BLIP_COMMIT_HASH=""
 
 # Uncomment to enable accelerated launch
-#export ACCELERATE="True"
+export ACCELERATE="True"
 
 ###########################################
