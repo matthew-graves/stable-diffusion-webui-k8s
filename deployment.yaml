@@ -27,12 +27,7 @@ spec:
         volumeMounts:
         - name: model-data
           mountPath: /app/models/Stable-diffusion
-        - name: sd-settings
-          mountPath: /app
       volumes:
       - name: model-data
         hostPath:
           path: /models
-      - name: sd-settings
-        configMap:
-          name: sd-settings
