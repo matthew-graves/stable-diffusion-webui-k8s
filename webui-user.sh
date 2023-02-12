@@ -7,7 +7,7 @@
 install_dir="/app"
 
 # Name of the subdirectory
-clone_dir="."
+clone_dir="stable-diffusion"
 
 # Commandline arguments for webui.py, for example: export COMMANDLINE_ARGS="--medvram --opt-split-attention"
 export COMMANDLINE_ARGS="--xformers --ckpt-dir /models"
