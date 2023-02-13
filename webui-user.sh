@@ -10,7 +10,7 @@ install_dir="/app"
 clone_dir="stable-diffusion"
 
 # Commandline arguments for webui.py, for example: export COMMANDLINE_ARGS="--medvram --opt-split-attention"
-export COMMANDLINE_ARGS="--xformers --ckpt-dir /models --medvram --listen"
+export COMMANDLINE_ARGS="--xformers --ckpt-dir /models --medvram --listen --enable-insecure-extension-access"
 
 # python3 executable
 #python_cmd="python3"
