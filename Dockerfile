@@ -10,16 +10,14 @@ RUN mkdir /home/stablediffusion
 RUN chown stablediffusion:stablediffusion /home/stablediffusion
 RUN chown stablediffusion:stablediffusion /app
 RUN chown stablediffusion:stablediffusion /models
-
-
 USER stablediffusion
 WORKDIR /app
 COPY webui-install.sh /app/webui-user.sh
 COPY requirements_versions.txt /app/
-
 RUN wget https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
 # ENTRYPOINT ["/bin/bash", "webui.sh"]
+ENV PIP_NO_CACHE_DIR=1
 RUN /bin/bash webui.sh
 
 COPY webui-user.sh /app/
-ENTRYPOINT ["/bin/bash", "webui.sh"]
+# ENTRYPOINT ["/bin/bash", "webui.sh"]

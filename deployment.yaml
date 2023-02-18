@@ -23,10 +23,11 @@ spec:
       containers:
       - name: stable-diffusion-webui
         image: ghcr.io/matthew-graves/stable-diffusion-webui-k8s:main
-        imagePullPolicy: Always
         volumeMounts:
         - name: model-data
           mountPath: /models
+        - name: outputs
+          mountPath: /app/stablediffusion/outputs
         resources:
           limits:
             nvidia.com/gpu:  1
@@ -34,3 +35,6 @@ spec:
       - name: model-data
         hostPath:
           path: /models
+      - name: outputs
+        hostPath:
+          path: /outputs
