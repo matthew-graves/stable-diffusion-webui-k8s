@@ -14,8 +14,12 @@ RUN chown stablediffusion:stablediffusion /models
 
 USER stablediffusion
 WORKDIR /app
-COPY webui-user.sh /app/
+COPY webui-install.sh /app/webui-user.sh
 COPY requirements_versions.txt /app/
 
 RUN wget https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
+# ENTRYPOINT ["/bin/bash", "webui.sh"]
+RUN /bin/bash webui.sh
+
+COPY webui-user.sh /app/
 ENTRYPOINT ["/bin/bash", "webui.sh"]
