@@ -12,29 +12,76 @@ spec:
       labels:
         app: stable-diffusion-webui
     spec:
+      securityContext:
+        fsGroup: 1000
       runtimeClassName: nvidia
       initContainers:
       - name: download-model
         image: alpine:3.12
-        command: ['sh', '-c', 'if [ ! -e "/models/sd-v1-4.ckpt" ]; then wget https://huggingface.co/CompVis/stable-diffusion-v-1-4-original/resolve/main/sd-v1-4.ckpt -P /models; fi']
+        command: ['sh', '-c', 'if [ ! -e "/models/sd-v1-4.ckpt" ]; then wget https://huggingface.co/CompVis/stable-diffusion-v-1-4-original/resolve/main/sd-v1-4.ckpt -P /models; fi; chown -R 1000:1000 /app']
         volumeMounts:
-        - name: model-data
+        - name: sd-model
           mountPath: /models
+        - name: models
+          mountPath: /app/stable-diffusion/models
+        - name: outputs
+          mountPath: /app/stable-diffusion/outputs
+        - name: embeddings
+          mountPath: /app/stable-diffusion/embeddings
+        - name: extensions
+          mountPath: /app/stable-diffusion/extensions
       containers:
       - name: stable-diffusion-webui
         image: ghcr.io/matthew-graves/stable-diffusion-webui-k8s:main
+        # imagePullPolicy: Always
         volumeMounts:
-        - name: model-data
+        - name: sd-model
           mountPath: /models
+        - name: models
+          mountPath: /app/stable-diffusion/models
         - name: outputs
-          mountPath: /app/stablediffusion/outputs
+          mountPath: /app/stable-diffusion/outputs
+        - name: embeddings
+          mountPath: /app/stable-diffusion/embeddings
+        - name: extensions
+          mountPath: /app/stable-diffusion/extensions
+        - name: webui-settings
+          mountPath: /app/webui-user.sh
+          subPath: webui-user.sh
         resources:
           limits:
-            nvidia.com/gpu:  1
+            nvidia.com/gpu: 1
+        command: [ "/bin/bash", "webui.sh" ]
+      - name: filebrowser
+        image: filebrowser/filebrowser
+        volumeMounts:
+        - name: sd-model
+          mountPath: /srv/models
+        - name: models
+          mountPath: /srv/stable-diffusion/models
+        - name: outputs
+          mountPath: /srv/stable-diffusion/outputs
+        - name: embeddings
+          mountPath: /srv/stable-diffusion/embeddings
+        - name: extensions
+          mountPath: /srv/stable-diffusion/extensions
       volumes:
-      - name: model-data
+      - name: sd-model
         hostPath:
           path: /models
       - name: outputs
         hostPath:
           path: /outputs
+      - name: models
+        hostPath:
+          path: /othermodels
+      - name: embeddings
+        hostPath:
+          path: /embeddings
+      - name: extensions
+        hostPath:
+          path: /extensions
+      volumes:
+      - name: webui-conf
+        configMap: 
+          name: webui-conf
